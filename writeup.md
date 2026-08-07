@@ -5,9 +5,10 @@
 - **The Autonomous Agent Track** (Track Winner: $400)
 
 **Attached Assets:**
-- **Public Code Repository**: [GitHub Repository (Mock Link)](https://github.com/tfug-prayagraj/agri-agent)
-- **Live Demo Dashboard**: Open `index.html` in this workspace directory
-- **Clonable Notebook**: `agri_agent_demo.ipynb` in the workspace directory
+- **Public Code Repository**: [GitHub Repository](https://github.com/RaghavParasher/agri-agent)
+- **Live Demo Dashboard**: Open `index.html` in the repository
+- **Clonable Notebook**: [Kaggle Notebook](https://www.kaggle.com/code/raghavparasher/notebook2ec091adcd)
+
 
 ---
 
