@@ -333,25 +333,34 @@ async function handleUserQueryDirectly(query) {
     const consoleLogs = document.getElementById("consoleLogs");
     consoleLogs.innerHTML = "";
 
+    let response = "";
     try {
-        const response = await agent.runAgentLoop(query, (step) => {
+        response = await agent.runAgentLoop(query, (step) => {
             appendConsoleStep(step);
         });
 
         appendMessage("agent", response);
 
-        // Update dashboard elements
-        renderFieldSelector();
-        updateTelemetryView();
-
     } catch (err) {
-        console.error(err);
+        console.error("Agent Loop Error:", err);
         appendMessage("agent", "I experienced an error executing that request. Please verify the sensors and try again.");
-    } finally {
         input.disabled = false;
         input.focus();
+        return;
     }
+
+    // Run UI Updates separately to prevent crashing the agent's output display
+    try {
+        renderFieldSelector();
+        updateTelemetryView();
+    } catch (uiErr) {
+        console.error("UI Update Error:", uiErr);
+    }
+
+    input.disabled = false;
+    input.focus();
 }
+
 
 // Add execution log card
 function appendConsoleStep(step) {
