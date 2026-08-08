@@ -45,8 +45,9 @@ We focused on **prompt engineering** and **structured JSON validation** to allow
 
 * **Kaggle Notebook (Clonable Demo)**: [Kaggle Notebook](https://www.kaggle.com/code/raghavparasher/notebook2ec091adcd)
 * **GitHub Repository**: [GitHub Codebase](https://github.com/RaghavParasher/agri-agent)
-* **Live Interactive Demo**: You can run the dashboard locally by opening the `index.html` file in the repository inside any modern web browser.
-* **Demo Video**: *[See running dashboard screenshots and interactive terminal instructions in the GitHub repository README]*
+* **Live Interactive Demo**: Open `index.html` locally inside the cloned repository to interact with the active dashboard and agent logs.
+* **Visual Walkthrough**: Check out the uploaded **Media Gallery** screenshots above to view step-by-step diagnostic scans, IoT nodes, smart sprinklers, and market charts.
+
 
 ---
 
