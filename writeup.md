@@ -43,11 +43,10 @@ We focused on **prompt engineering** and **structured JSON validation** to allow
 
 ### 🕸️ The Prototype
 
-* **Kaggle Notebook (Clonable Demo)**: [Kaggle Notebook](https://www.kaggle.com/code/raghavparasher/notebook2ec091adcd)
-* **GitHub Repository**: [GitHub Codebase](https://github.com/RaghavParasher/agri-agent)
-* **Live Interactive Demo**: Open `index.html` locally inside the cloned repository to interact with the active dashboard and agent logs.
-* **Visual Walkthrough**: Check out the uploaded **Media Gallery** screenshots above to view step-by-step diagnostic scans, IoT nodes, smart sprinklers, and market charts.
-
+* **Live Interactive Dashboard**: [AgriAgent Live Console](https://raghavparasher.github.io/agri-agent/) (Run the live dashboard instantly in your browser)
+* **GitHub Repository (Codebase)**: [GitHub Repository](https://github.com/RaghavParasher/agri-agent) (Source code, configurations, and mock APIs)
+* **Kaggle Notebook (Clonable Demo)**: [Kaggle Notebook](https://www.kaggle.com/code/raghavparasher/notebook2ec091adcd) (Python implementation code)
+* **Visual Walkthrough**: Check out the **Media Gallery** screenshots above to view step-by-step diagnostic scans, soil telemetry radar charts, weather alerts, and crop index valuations.
 
 ---
 
