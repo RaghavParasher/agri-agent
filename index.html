@@ -31,8 +31,25 @@
             <div class="field-section">
                 <h3 class="section-title"><i data-lucide="map-pin"></i> Field Selection</h3>
                 <div class="field-selector" id="fieldSelector">
-                    <!-- Dynamic fields will be rendered here -->
+                    <!-- Dynamic fields rendered here -->
                 </div>
+            </div>
+
+            <!-- Field Camera (Multimodal vision module) -->
+            <div class="camera-section">
+                <h3 class="section-title"><i data-lucide="camera"></i> Field Crop Camera</h3>
+                <div class="camera-viewfinder" id="cameraViewfinder">
+                    <div class="camera-lens">📸</div>
+                    <div class="camera-label" id="cameraStatus">Camera Offline</div>
+                </div>
+                <div class="leaf-select-row">
+                    <button class="leaf-btn" onclick="selectLeaf('rice-healthy', '🌾 Rice Leaf (Healthy)')">🌾 Rice</button>
+                    <button class="leaf-btn" onclick="selectLeaf('wheat-rust', '🍂 Wheat Rust (Infected)')">🍂 Rust</button>
+                    <button class="leaf-btn" onclick="selectLeaf('maize-blight', '🌽 Maize Blight (Infected)')">🌽 Blight</button>
+                </div>
+                <button class="camera-trigger-btn" id="btnAnalyzeLeaf" onclick="triggerLeafAnalysis()" disabled>
+                    <i data-lucide="scan-face"></i> Capture & Analyze Leaf
+                </button>
             </div>
 
             <div class="sensors-section">
@@ -63,58 +80,16 @@
                     </div>
                 </div>
 
-                <div class="npk-container">
-                    <div class="npk-bar-group npk-n">
-                        <div class="npk-bar-labels">
-                            <span>Nitrogen (N)</span>
-                            <span id="valN">-- mg/kg</span>
-                        </div>
-                        <div class="npk-bar-track">
-                            <div class="npk-bar-fill" id="barN" style="width: 0%"></div>
-                        </div>
-                    </div>
-                    <div class="npk-bar-group npk-p">
-                        <div class="npk-bar-labels">
-                            <span>Phosphorus (P)</span>
-                            <span id="valP">-- mg/kg</span>
-                        </div>
-                        <div class="npk-bar-track">
-                            <div class="npk-bar-fill" id="barP" style="width: 0%"></div>
-                        </div>
-                    </div>
-                    <div class="npk-bar-group npk-k">
-                        <div class="npk-bar-labels">
-                            <span>Potassium (K)</span>
-                            <span id="valK">-- mg/kg</span>
-                        </div>
-                        <div class="npk-bar-track">
-                            <div class="npk-bar-fill" id="barK" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <!-- Soil Moisture Live Chart -->
+                <div class="chart-container" style="margin-top: 1rem; background: rgba(0,0,0,0.2); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <div style="font-size: 0.7rem; color: var(--color-text-muted); margin-bottom: 0.3rem;">MOISTURE LEVEL TRENDS (7 Hours)</div>
+                    <canvas id="moistureChart"></canvas>
                 </div>
-            </div>
 
-            <div class="weather-section">
-                <h3 class="section-title"><i data-lucide="cloud-sun"></i> Weather Services</h3>
-                <div class="weather-card">
-                    <div class="weather-header">
-                        <div>
-                            <span class="weather-desc" id="weatherLocation">--</span>
-                            <div class="weather-temp-main" id="weatherTemp">--°C</div>
-                        </div>
-                        <div style="font-size: 2rem;" id="weatherIcon">☀️</div>
-                    </div>
-                    <div id="weatherAlerts" class="weather-alerts">
-                        <!-- Alert notices will appear here -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Market Widget in Sidebar -->
-            <div class="market-section" style="margin-top: auto;">
-                <h3 class="section-title"><i data-lucide="trending-up"></i> Market Crop Price</h3>
-                <div class="market-widget" id="marketWidget">
-                    <!-- Populated dynamically -->
+                <!-- NPK Radar Chart -->
+                <div class="chart-container" style="margin-top: 1rem; background: rgba(0,0,0,0.2); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <div style="font-size: 0.7rem; color: var(--color-text-muted); margin-bottom: 0.3rem;">NUTRIENT PROFILE (NPK)</div>
+                    <canvas id="npkRadarChart"></canvas>
                 </div>
             </div>
         </section>
@@ -141,13 +116,12 @@
 
             <div class="chat-input-container">
                 <div class="quick-hints" id="quickHints">
-                    <span class="quick-hint-chip" onclick="sendQuickMessage('Check sensors in Field B')">🔍 Check sensors Field B</span>
-                    <span class="quick-hint-chip" onclick="sendQuickMessage('Should I water Field B for 20 minutes?')">💦 Water Field B</span>
-                    <span class="quick-hint-chip" onclick="sendQuickMessage('What is the weather forecast for Field C?')">⛅ Weather Field C</span>
-                    <span class="quick-hint-chip" onclick="sendQuickMessage('Show me market price of Wheat')">📈 Wheat Market Rate</span>
+                    <span class="quick-hint-chip" onclick="sendQuickMessage('Check sensors in Field B and show the market price of Wheat')">⚡ Parallel Call: Field B & Wheat Price</span>
+                    <span class="quick-hint-chip" onclick="sendQuickMessage('Should I water Field B for 20 minutes? Check forecast first.')">💦 Rain-safe Smart Water Field B</span>
+                    <span class="quick-hint-chip" onclick="sendQuickMessage('Show forecast for Field C and market price of Maize')">⛅ Field C weather & Maize rate</span>
                 </div>
                 <form class="chat-input-form" id="chatForm">
-                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask AgriAgent... (e.g., 'Water Field B for 15 minutes')" autocomplete="off">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask AgriAgent... (e.g., 'Water Field B and check prices')" autocomplete="off">
                     <button type="submit" class="chat-send-btn"><i data-lucide="send"></i></button>
                 </form>
             </div>
@@ -157,12 +131,21 @@
         <section class="agent-console">
             <div class="console-header">
                 <div class="console-title"><i data-lucide="terminal"></i> Gemma 4 Execution Mind</div>
-                <span class="badge" style="font-family: monospace; font-size: 0.7rem; border-color: var(--border-accent);">native_function_calling: true</span>
+                <span class="badge" style="font-family: monospace; font-size: 0.7rem; border-color: var(--border-accent);">parallel_calling: true</span>
             </div>
+            
             <div class="console-logs" id="consoleLogs">
                 <div style="color: var(--color-text-dim); text-align: center; margin-top: 2rem;">
                     <i data-lucide="activity" style="width: 40px; height: 40px; margin-bottom: 0.5rem; display: block; margin-left: auto; margin-right: auto; opacity: 0.5;"></i>
-                    Ask the agent a question to observe Gemma 4 tool calling and reasoning steps in real-time.
+                    Ask the agent a compound query to observe parallel function calling in real-time.
+                </div>
+            </div>
+
+            <!-- Market Price Line Chart -->
+            <div class="market-section" style="padding: 1rem; border-top: 1px solid var(--border-color); background: rgba(5,8,6,0.9);">
+                <h3 class="section-title" style="margin-bottom: 0.5rem;"><i data-lucide="trending-up"></i> Market Index Trends</h3>
+                <div style="background: rgba(0,0,0,0.3); padding: 0.5rem; border-radius: 8px;">
+                    <canvas id="marketChart" style="max-height: 140px;"></canvas>
                 </div>
             </div>
         </section>

@@ -9,6 +9,7 @@ const fields = {
         ph: 6.2,
         temperature: 28.5, // Celsius
         npk: { nitrogen: 45, phosphorus: 30, potassium: 55 }, // mg/kg
+        moistureHistory: [70, 71, 72, 70, 69, 72, 72], // last 7 hours moisture history
         irrigationHistory: []
     },
     "field-b": {
@@ -19,6 +20,7 @@ const fields = {
         ph: 6.8,
         temperature: 31.2,
         npk: { nitrogen: 20, phosphorus: 15, potassium: 40 }, // low NPK
+        moistureHistory: [52, 48, 44, 40, 38, 35, 34],
         irrigationHistory: []
     },
     "field-c": {
@@ -29,6 +31,7 @@ const fields = {
         ph: 6.5,
         temperature: 26.0,
         npk: { nitrogen: 50, phosphorus: 35, potassium: 45 },
+        moistureHistory: [55, 54, 53, 53, 52, 52, 52],
         irrigationHistory: []
     }
 };
@@ -97,6 +100,35 @@ const marketPrices = {
     }
 };
 
+const diseaseDatabase = {
+    "rice-healthy": {
+        status: "healthy",
+        crop: "Rice",
+        diagnosis: "Healthy leaf tissue",
+        confidence: 97,
+        organicTreatment: "Maintain regular water levels and monitor for local pests.",
+        chemicalTreatment: "No fungicide required."
+    },
+    "wheat-rust": {
+        status: "infected",
+        crop: "Wheat",
+        diagnosis: "Stem/Black Rust (Puccinia graminis)",
+        severity: "Moderate (35% surface area affected)",
+        confidence: 94,
+        organicTreatment: "Apply neem oil extract spray. Prune and destroy highly infected leaves.",
+        chemicalTreatment: "Spray Propiconazole or Tebuconazole fungicide immediately to arrest spore spread."
+    },
+    "maize-blight": {
+        status: "infected",
+        crop: "Maize",
+        diagnosis: "Northern Leaf Blight (Exserohilum turcicum)",
+        severity: "Severe (65% leaf chlorosis)",
+        confidence: 89,
+        organicTreatment: "Rotate crops next season. Apply copper-based organic fungicide sprays.",
+        chemicalTreatment: "Apply Mancozeb or Azoxystrobin fungicide spray at 14-day intervals."
+    }
+};
+
 // API Functions
 function get_soil_sensors(field_id) {
     console.log(`[API Call] get_soil_sensors(field_id="${field_id}")`);
@@ -142,11 +174,14 @@ function trigger_irrigation(field_id, duration_minutes) {
     console.log(`[API Call] trigger_irrigation(field_id="${field_id}", duration_minutes=${duration_minutes})`);
     const fId = field_id.toLowerCase().trim();
     if (fields[fId]) {
-        // Update moisture mock value
         const previousMoisture = fields[fId].moisture;
         const increase = Math.min(100 - previousMoisture, Math.round(duration_minutes * 1.5));
         fields[fId].moisture += increase;
         
+        // Push to history
+        fields[fId].moistureHistory.shift();
+        fields[fId].moistureHistory.push(fields[fId].moisture);
+
         const record = {
             timestamp: new Date().toISOString(),
             duration: duration_minutes,
@@ -164,13 +199,29 @@ function trigger_irrigation(field_id, duration_minutes) {
     return { status: "error", message: `Field with ID '${field_id}' not found.` };
 }
 
+function analyze_crop_image(image_id) {
+    console.log(`[API Call] analyze_crop_image(image_id="${image_id}")`);
+    const imgId = image_id.toLowerCase().trim();
+    if (diseaseDatabase[imgId]) {
+        return {
+            status: "success",
+            timestamp: new Date().toISOString(),
+            image_id: image_id,
+            data: diseaseDatabase[imgId]
+        };
+    }
+    return { status: "error", message: `Image identifier '${image_id}' not recognized in database.` };
+}
+
 // Export mock API database and functions to window scope for frontend access
 window.AgriAPIs = {
     fields,
     weatherData,
     marketPrices,
+    diseaseDatabase,
     get_soil_sensors,
     get_weather_forecast,
     get_market_prices,
-    trigger_irrigation
+    trigger_irrigation,
+    analyze_crop_image
 };

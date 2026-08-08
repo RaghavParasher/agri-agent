@@ -4,10 +4,14 @@ An AI-first, autonomous agricultural companion built for the **Build with Gemma:
 
 ---
 
-## 🌟 Key Features
-- **Smart Agriculture Dashboard**: Real-time monitoring of soil telemetry (Moisture %, NPK nutrient values, soil pH, and temperature).
-- **Gemma 4 Native Function Calling**: Employs Gemma 4’s native tool-calling capabilities to query IoT sensors, fetch local weather forecasts, check market grain rates, and automate irrigation loops.
-- **Dynamic Decision Branching**: Agent verifies live soil moisture and rain probability before executing irrigation to conserve water and prevent waterlogging.
+## 🌟 Upgraded Winning Features
+- **Smart Agriculture Dashboard**: Real-time monitoring of soil telemetry (Moisture %, NPK nutrient values, soil pH, and temperature) integrated with **Chart.js**.
+- **Interactive Visualizations**:
+  - *NPK Nutrient Radar Chart*: Displays current soil chemicals compared to target optimal values.
+  - *Live Soil Moisture Line Chart*: Updates dynamically when the user triggers the irrigation system.
+  - *Market Price Trends Chart*: Plots 6-day price evaluations for Rice, Wheat, and Maize.
+- **Multimodal Visual Diagnostics**: Features a simulated **Field Crop Camera** stream that uses Gemma 4's vision capabilities to diagnose crop diseases (e.g. Wheat Rust, Maize Blight) from leaf photos and prescribe treatments.
+- **Gemma 4 Parallel Function Calling**: Handles compound queries (e.g., *"Check Field B sensors and check Wheat market rates"*) by issuing multiple parallel JSON tool calls in a single turn.
 - **Live Execution Console**: Interactive visual logger showing Gemma 4’s thought processes, API parameters, JSON payloads, and execution outputs in real-time.
 
 ---
@@ -15,11 +19,11 @@ An AI-first, autonomous agricultural companion built for the **Build with Gemma:
 ## 📂 Project Structure
 - `index.html`: Main dashboard interface.
 - `index.css`: Stylesheet implementing premium dark forest theme (`#080f0c`) with custom glassmorphism.
-- `app.js`: Connects dashboard inputs, runs the agent execution, and updates UI telemetry.
-- `gemma-agent.js`: Interprets user queries and simulates Gemma 4’s function calling and reasoning loops.
-- `mock-apis.js`: Local mock databases representing field telemetry, weather forecasts, market indexes, and irrigation actuators.
-- `agri_agent_demo.ipynb`: Fully executable python-based notebook demonstrating the tool execution pipeline.
-- `writeup.md`: Official project submission report draft.
+- `app.js`: Connects dashboard inputs, manages Chart.js initializations, and handles leaf scanner camera interactions.
+- `gemma-agent.js`: Interprets user queries and simulates Gemma 4’s parallel tool calling and vision loops.
+- `mock-apis.js`: Local mock databases representing field telemetry, weather forecasts, market indexes, leaf diseases, and sprinkler actuators.
+- `agri_agent_demo.ipynb`: Fully executable python-based notebook demonstrating the upgraded execution pipeline.
+- `writeup.md`: Upgraded project submission report draft.
 
 ---
 
@@ -28,7 +32,8 @@ An AI-first, autonomous agricultural companion built for the **Build with Gemma:
 ### 1. Dashboard UI
 1. Clone this repository to your computer.
 2. Double-click the `index.html` file to open it in any modern web browser.
-3. Use the quick recommendation chips (e.g. *"Water Field B"*) or type your questions in the chat panel.
+3. Try clicking a leaf button in the **Field Crop Camera** widget (e.g. *Wheat Rust*), then click **Capture & Analyze Leaf** to run vision diagnostics.
+4. Try typing a compound query like: *"Check Field B sensors and tell me the market price of Wheat"*.
 
 ### 2. Python Notebook
 If you have Jupyter installed locally, run:
